@@ -1,0 +1,13 @@
+.Body {
+    background-color: rgb(3, 81, 88);;
+}
+
+.Card {
+    margin: 25px;
+}
+#CardTitle {
+    justify-content: space-between;
+}
+#Btn {
+    height: 2.3pc;
+}
