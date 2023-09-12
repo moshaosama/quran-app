@@ -11,3 +11,9 @@
 #Btn {
     height: 2.3pc;
 }
+#pagination {
+    justify-content: center;
+}
+#nBtn {
+    margin: 8px;
+}

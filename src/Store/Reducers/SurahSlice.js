@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useState } from "react";
 
 
 export const fetchSurah  = createAsyncThunk("surahSlice/fetchSurah" , async () => {
@@ -7,6 +8,7 @@ export const fetchSurah  = createAsyncThunk("surahSlice/fetchSurah" , async () =
     const data = await res.json();
     return data;
 })
+
 
 const surahSlice = createSlice({
     name: 'surahSlice',

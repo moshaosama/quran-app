@@ -1,29 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSurah } from "../Store/Reducers/SurahSlice";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import ReactAudioPlayer from 'react-audio-player';
 import { Link } from "react-router-dom";
+import swal from 'sweetalert2'
 
 function Quran () {
+
+    const [current ,setcurrent] = useState(1);
+    const items =9;
+    const lastitems= current * items;
+    const firstitems = lastitems - items;
+
+    const npage = Math.ceil(114 / items);
+    const numbers = [...Array(npage + 1).keys()].slice(1);
+    console.log(numbers);
     const state = useSelector(state => state.Surah);
-    const state1 =useSelector(state => state.Play);
     const Dispatch =useDispatch()
     useEffect(() => {
         Dispatch(fetchSurah())
     },[])
-    console.log(state.chapters);
     return (
+        <>
         <Container>
             <Row>
                 {
-                    state?.chapters?.map((el) => (
-                        <Col>
+                    state?.chapters?.slice(firstitems ,lastitems)?.map((el) => (
+                        <Col key={el?.id}>
                             <Card className="Card">
                                 <Card.Body>
                                     <Card.Title className="d-flex" id="CardTitle">
-                                        <h1>{el?.name_arabic}</h1>
-                                        <Link to={"Show"}>
+                                        <h1 >{el?.name_arabic}</h1>
+                                        <Link to={`/${el?.id}`}>
                                             <div className="btn btn-outline-dark" id="Btn">
                                                 Show
                                             </div>
@@ -33,6 +42,7 @@ function Quran () {
                                         <ReactAudioPlayer
                                             src={`https://server7.mp3quran.net/basit/`+ ('00' + el?.id).slice(-3) + '.mp3'}
                                             controls
+                                            
                                         />
                                     </Card.Text>
                                 </Card.Body>
@@ -42,6 +52,61 @@ function Quran () {
                 }
             </Row>
         </Container>
+        <Container className="d-flex" id="pagination">
+            <div className="pagination">
+                <li className="page-item"> 
+                    <div className="btn btn-light" onClick={(e) => {
+                        e.preventDefault();
+                        if(current<=1){
+                            swal.fire({
+                                title:"can not Prev Again",
+                                icon:'error',
+                                showCancelButton:true,
+                            })
+                        }
+                        else{
+                            setcurrent(current -1)
+                        }
+                    }}>
+                        Prev
+                    </div>
+                </li>
+                {
+                    numbers?.map((el) => {
+                        return (
+                            <li className={`page-item ${current === el ? 'active' :''}`} key={el}>
+                                <div className="btn btn-light" id="nBtn" onClick={(e) => {
+                                    e.preventDefault()
+                                    setcurrent(el)
+                                    document.getElementById("nBtn").style.color = "blue";
+                                }}>
+                                    {el}
+                                </div>
+                            </li>
+                        )
+                    })
+                }
+                <li className="page-item">
+                    <div className="btn btn-light" onClick={(e) => {
+                        e.preventDefault();
+
+                        if(current>=13){
+                            swal.fire({
+                                title:"can not Next Again",
+                                icon:'error',
+                                showCancelButton:true,
+                            })
+                        }
+                        else{
+                            setcurrent(current + 1)
+                        }
+                    }}>
+                        Next
+                    </div>
+                </li>
+            </div>
+        </Container>
+        </>
     )
 }
 
