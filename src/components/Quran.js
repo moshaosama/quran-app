@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSurah } from "../Store/Reducers/SurahSlice";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import ReactAudioPlayer from 'react-audio-player';
 import { Link } from "react-router-dom";
 import swal from 'sweetalert2'
@@ -52,10 +52,10 @@ function Quran () {
                 }
             </Row>
         </Container>
-        <Container className="d-flex" id="pagination">
-            <div className="pagination">
+        <Container id="pagination">
+            <div className="pagination" id="Buttons">
                 <li className="page-item"> 
-                    <div className="btn btn-light" onClick={(e) => {
+                    <Button variant="light" onClick={(e) => {
                         e.preventDefault();
                         if(current<=1){
                             swal.fire({
@@ -69,25 +69,25 @@ function Quran () {
                         }
                     }}>
                         Prev
-                    </div>
+                    </Button>
                 </li>
                 {
                     numbers?.map((el) => {
                         return (
                             <li className={`page-item ${current === el ? 'active' :''}`} key={el}>
-                                <div className="btn btn-light" id="nBtn" onClick={(e) => {
+                                <Button variant="light" id="nBtn" onClick={(e) => {
                                     e.preventDefault()
                                     setcurrent(el)
                                     document.getElementById("nBtn").style.color = "blue";
                                 }}>
                                     {el}
-                                </div>
+                                </Button>
                             </li>
                         )
                     })
                 }
                 <li className="page-item">
-                    <div className="btn btn-light" onClick={(e) => {
+                    <Button variant="light" onClick={(e) => {
                         e.preventDefault();
 
                         if(current>=13){
@@ -102,7 +102,7 @@ function Quran () {
                         }
                     }}>
                         Next
-                    </div>
+                    </Button>
                 </li>
             </div>
         </Container>

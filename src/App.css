@@ -17,3 +17,13 @@
 #nBtn {
     margin: 8px;
 }
+.active button {
+    background-color: rgb(3, 81, 88);
+    color: white;
+}
+
+@media (max-width:433px) {
+    #nBtn {
+        margin: -8px;
+    }
+}
