@@ -17,13 +17,10 @@
 #nBtn {
     margin: 8px;
 }
+#Buttons{
+    justify-content: center;
+}
 .active button {
     background-color: rgb(3, 81, 88);
     color: white;
-}
-
-@media (max-width:433px) {
-    #nBtn {
-        margin: -8px;
-    }
 }

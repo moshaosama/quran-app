@@ -9,18 +9,21 @@ import swal from 'sweetalert2'
 function Quran () {
 
     const [current ,setcurrent] = useState(1);
+    const [firstSlice ,setFirstSlice] = useState(1);
+    const [lastSlice ,setLastSlice] = useState(5);
     const items =9;
     const lastitems= current * items;
     const firstitems = lastitems - items;
 
     const npage = Math.ceil(114 / items);
-    const numbers = [...Array(npage + 1).keys()].slice(1);
+    const numbers = [...Array(npage + 1).keys()].slice(firstSlice ,lastSlice);
     console.log(numbers);
     const state = useSelector(state => state.Surah);
     const Dispatch =useDispatch()
     useEffect(() => {
         Dispatch(fetchSurah())
     },[])
+
     return (
         <>
         <Container>
@@ -57,6 +60,18 @@ function Quran () {
                 <li className="page-item"> 
                     <Button variant="light" onClick={(e) => {
                         e.preventDefault();
+                        if(current==13) {
+                            setFirstSlice(9)
+                            setLastSlice(13)
+                        }
+                        else if(current == 9) {
+                            setFirstSlice(5)
+                            setLastSlice(9)
+                        }
+                        else if(current==5){
+                            setFirstSlice(1);
+                            setLastSlice(5);
+                        }
                         if(current<=1){
                             swal.fire({
                                 title:"can not Prev Again",
@@ -89,7 +104,18 @@ function Quran () {
                 <li className="page-item">
                     <Button variant="light" onClick={(e) => {
                         e.preventDefault();
-
+                        if(current ==4) {
+                            setFirstSlice(5);
+                            setLastSlice(9)
+                        }
+                        else if(current==8){
+                            setFirstSlice(9);
+                            setLastSlice(13)
+                        }
+                        else if(current==12) {
+                            setFirstSlice(13)
+                            setLastSlice(14)
+                        }
                         if(current>=13){
                             swal.fire({
                                 title:"can not Next Again",
